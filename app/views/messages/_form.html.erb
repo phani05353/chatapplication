@@ -1,25 +1,32 @@
-<%= form_for(@message) do |f| %>
-  <% if @message.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
-
-      <ul>
-      <% @message.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.collection_select :user_id, User.all, :id, :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% if @message.errors.any? %>
+<h2>The following errors prevented the article from getting created</h2>
+<ul>
+<% @message.errors.full_messages.each do |msg| %>
+<li><h2></h2><%= msg %></h2></li>
 <% end %>
+</ul>
+<% end %>
+<div class='row'>
+<div class='col-xs-12'>
+<%= form_for(@message, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+<div class="form-group">
+<div class="control-label col-sm-2">
+<%= f.label :user_id %>
+</div>
+<div class="col-sm-8">
+<%= f.text_field :body, class: "form-control", placeholder: "Title of article", autofocus: true %>
+</div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+       <%= f.submit class: 'btn btn-primary btn-lg' %>
+    </div>
+</div>
+<% end %>
+<div class="col-xs-4 col-xs-offset-4">
+[ <%= link_to "Cancel request and return to articles listing", messages_path %> ]
+</div>
+</div>
+</div>
